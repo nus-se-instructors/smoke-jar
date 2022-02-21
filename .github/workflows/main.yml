@@ -2,11 +2,16 @@ name: Smoke test (Linux)
 on: workflow_dispatch
 
 jobs:
-  main:
+  unix:
     name: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        include:
+        - os: ubuntu-latest
+          filename: linux.py
+        - os: macos-latest
+          filename: linux.py
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -26,10 +31,42 @@ jobs:
           wget -q https://github.com/Cyolune/ip/releases/download/A-Release/sana.jar
 
       - name: Perform smoke test
-        run: python3 linux.py
+        run: python3 ${{ matrix.filename }}
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
         with:
           name: linux
           path: linux.csv
+
+  windows:
+    name: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Prepare Jars for smoke testing
+        run: |
+          New-Item jars -itemtype directory
+          cd jars
+          Invoke-WebRequest -OutFile sana.jar -Uri https://github.com/Cyolune/ip/releases/download/A-Release/sana.jar
+
+      - name: Perform smoke test
+        run: python3 windows.py
+
+      - name: Upload result as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows
+          path: windows.csv
