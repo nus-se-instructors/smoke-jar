@@ -39,6 +39,47 @@ jobs:
           name: ${{ matrix.os }}
           path: linux.csv
 
+  mac:
+    name: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup headless environment
+        run: brew install --cask xquartz
+
+      - name: Prepare Jars for smoke testing
+        run: |
+          mkdir jars
+          cd jars
+          wget -q https://github.com/Cyolune/ip/releases/download/A-Release/sana.jar
+          mv ../RepoSense.jar .
+
+      - name: Perform smoke test
+        run: |
+          Xvfb :99 &
+          export DISPLAY=:99
+          python3 linux.py
+          mv linux.csv mac.csv
+
+      - name: Upload result as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}
+          path: mac.csv
+
   windows:
     name: ${{ matrix.os }}
     strategy:
