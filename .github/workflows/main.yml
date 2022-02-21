@@ -1,5 +1,5 @@
 name: Smoke test (Linux)
-on: workflow_dispatch
+on: [push, workflow_dispatch]
 
 jobs:
   unix:
@@ -20,11 +20,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Prepare headless environment
-        run: |
-          Xvfb :99 &
-          export DISPLAY=:99
-
       - name: Prepare Jars for smoke testing
         run: |
           mkdir jars
@@ -33,7 +28,10 @@ jobs:
           mv ../RepoSense.jar .
 
       - name: Perform smoke test
-        run: python3 linux.py
+        run: |
+          Xvfb :99 &
+          export DISPLAY=:99
+          python3 linux.py
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
