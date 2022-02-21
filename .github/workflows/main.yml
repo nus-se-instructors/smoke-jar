@@ -6,7 +6,7 @@ jobs:
     name: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -19,6 +19,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Prepare headless environment
+        run: |
+          Xvfb :99 &
+          export DISPLAY=:99
 
       - name: Prepare Jars for smoke testing
         run: |
@@ -33,7 +38,7 @@ jobs:
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: linux
+          name: ${{ matrix.os }}
           path: linux.csv
 
   windows:
@@ -66,5 +71,5 @@ jobs:
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: windows
+          name: ${{ matrix.os }}
           path: windows.csv
