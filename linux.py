@@ -18,7 +18,7 @@ for root, dirs, files in os.walk("jars"):
             shutil.copy2(jarpath,"jar_test")
             os.chdir("jar_test")
             isOk = False
-            jarproc = subprocess.Popen([JAVA_PATH, "-Djava.awt.headless=true -jar", jarname],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=False)
+            jarproc = subprocess.Popen([JAVA_PATH, "-jar", jarname],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=False)
             try:
                 poll = jarproc.wait(1)
             except subprocess.TimeoutExpired:
@@ -29,7 +29,7 @@ for root, dirs, files in os.walk("jars"):
                 err = ""
             else:
                 #rerun and log the error
-                jarproc = subprocess.Popen([JAVA_PATH, "-Djava.awt.headless=true -jar", jarname],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=False)
+                jarproc = subprocess.Popen([JAVA_PATH, "-jar", jarname],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=False)
                 err = jarproc.communicate()[1]
                 jarproc.kill()  #shouldn't be necessary
             table.append([str(jarname), str(err)])
