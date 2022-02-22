@@ -1,4 +1,4 @@
-git clone git@github.com:XQuartz/xorg-server.git xserver
+git clone https://github.com/XQuartz/xorg-server.git xserver
 cd xserver
 
 export ACLOCAL="aclocal -I /opt/X11/share/aclocal -I /usr/local/share/aclocal"
