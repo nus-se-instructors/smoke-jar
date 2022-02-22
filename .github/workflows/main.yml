@@ -49,20 +49,21 @@ jobs:
           sleep 10
           ps aux | grep Xvfb
           python3 linux.py
-          java -jar jars/sana.jar
+          timeout -k 10 5 java -jar jars/sana.jar
           mv linux.csv ${{ runner.os }}.csv
 
       - name: Perform smoke test (Mac)
         if: runner.os == 'macOS'
         run: |
           brew install --cask xquartz
+          brew install coreutils
           sudo /opt/X11/libexec/privileged_startx
           PATH=$PATH:/opt/X11/bin
           sudo Xvfb $DISPLAY -screen 0 1280x1024x24 &
           sleep 10
           ps aux | grep Xvfb
           python3 linux.py
-          java -jar jars/sana.jar
+          gtimeout -k 10 5 java -jar jars/sana.jar
           mv linux.csv ${{ runner.os }}.csv
 
       - name: Perform smoke test (Windows)
@@ -70,6 +71,7 @@ jobs:
         run: |
           python3 windows.py
           java -jar jars/sana.jar
+          timeout /t 10
           Move-Item -Path .\windows.csv -Destination .\${{ runner.os }}.csv
 
       - name: Upload result as artifact
