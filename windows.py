@@ -18,7 +18,7 @@ for root, dirs, files in os.walk("jars"):
             shutil.copy2(jarpath,"jar_test")
             os.chdir("jar_test")
             isOk = False
-            jarproc = subprocess.Popen([JAVA_PATH, "-jar", jarname],stdin=subprocess.PIPE,stdout=subprocess.STDOUT,stderr=subprocess.STDOUT, shell=False)
+            jarproc = subprocess.Popen([JAVA_PATH, "-jar", jarname],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.STDOUT, shell=False)
             try:
                 poll = jarproc.wait(5)
             except subprocess.TimeoutExpired:
