@@ -47,6 +47,7 @@ jobs:
           sudo apt-get install -y xvfb libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xinput0 libxcb-xfixes0
           sudo /usr/bin/Xvfb $DISPLAY -screen 0 1280x1024x24 &
           sleep 10
+          ps aux | grep Xvfb
           python3 linux.py
           mv linux.csv ${{ runner.os }}.csv
 
@@ -56,8 +57,9 @@ jobs:
           brew install --cask xquartz
           sudo /opt/X11/libexec/privileged_startx
           PATH=$PATH:/opt/X11/bin
-          sudo xvfb $DISPLAY -screen 0 1280x1024x24 &
+          sudo Xvfb $DISPLAY -screen 0 1280x1024x24 &
           sleep 10
+          ps aux | grep Xvfb
           python3 linux.py
           mv linux.csv ${{ runner.os }}.csv
 
