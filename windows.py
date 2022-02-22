@@ -20,7 +20,7 @@ for root, dirs, files in os.walk("jars"):
             isOk = False
             jarproc = subprocess.Popen([JAVA_PATH, "-jar", jarname],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.STDOUT, shell=False)
             try:
-                poll = jarproc.wait(10)
+                poll = jarproc.wait(60)
             except subprocess.TimeoutExpired:
                 print("Ok")
                 isOk = True
