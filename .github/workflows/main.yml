@@ -30,7 +30,7 @@ jobs:
           cd jars
           wget -q https://github.com/Cyolune/ip/releases/download/A-Release/sana.jar
           mv ../RepoSense.jar .
-          ls
+          ls -lh
 
       - name: Prepare Jars for smoke testing (Windows)
         if: runner.os == 'Windows'
