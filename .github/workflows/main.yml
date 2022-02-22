@@ -2,57 +2,16 @@ name: Smoke test (Linux)
 on: [push, workflow_dispatch]
 
 jobs:
-  unix:
+  smoke:
     name: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Setup Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Prepare Jars for smoke testing
-        run: |
-          mkdir jars
-          cd jars
-          wget -q https://github.com/Cyolune/ip/releases/download/A-Release/sana.jar
-          mv ../RepoSense.jar .
-          ls
-
-      - name: Perform smoke test
-        run: |
-          export DISPLAY=':99.0'
-          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-          python3 linux.py
-          ps aux
-
-      - name: Upload result as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.os }}
-          path: linux.csv
-
-      - name: Cleanup Xvfb
-        uses: bcomnes/cleanup-xvfb@v1
-
-  mac:
-    name: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
+      DISPLAY: :0
 
     steps:
       - name: Checkout repository
@@ -64,10 +23,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup headless environment
-        run: brew install --cask xquartz
-
-      - name: Prepare Jars for smoke testing
+      - name: Prepare Jars for smoke testing (Mac and Ubuntu)
+        if: runner.os != 'Windows'
         run: |
           mkdir jars
           cd jars
@@ -75,41 +32,8 @@ jobs:
           mv ../RepoSense.jar .
           ls
 
-      - name: Perform smoke test
-        run: |
-          export DISPLAY=':99.0'
-          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-          python3 linux.py
-          mv linux.csv mac.csv
-          ps aux
-
-      - name: Upload result as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.os }}
-          path: mac.csv
-
-      - name: Cleanup Xvfb
-        uses: bcomnes/cleanup-xvfb@v1
-
-  windows:
-    name: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Setup Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Prepare Jars for smoke testing
+      - name: Prepare Jars for smoke testing (Windows)
+        if: runner.os == 'Windows'
         run: |
           New-Item jars -itemtype directory
           cd jars
@@ -117,11 +41,30 @@ jobs:
           Move-Item -Path ..\RepoSense.jar -Destination .\RepoSense.jar
           Get-ChildItem
 
-      - name: Perform smoke test
-        run: python3 windows.py
+      - name: Perform smoke test (Ubuntu)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y xvfb libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xinput0 libxcb-xfixes0
+          sudo /usr/bin/Xvfb $DISPLAY -screen 0 1280x1024x24 &
+          python3 linux.py
+          mv linux.csv ${{ runner.os }}.csv
+
+      - name: Perform smoke test (Mac)
+        if: runner.os == 'macOS'
+        run: |
+          brew install --cask xquartz
+          sudo /usr/bin/Xvfb $DISPLAY -screen 0 1280x1024x24 &
+          python3 linux.py
+          mv linux.csv ${{ runner.os }}.csv
+
+      - name: Perform smoke test (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          python3 windows.py
+          Move-Item -Path .\windows.csv -Destination .\${{ runner.os }}.csv
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
-          path: windows.csv
+          path: ${{ runner.os }}.csv
