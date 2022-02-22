@@ -29,15 +29,19 @@ jobs:
           ls
 
       - name: Perform smoke test
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: python3 linux.py
+        run: |
+          export DISPLAY=':99.0'
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+          python3 linux.py
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
           path: linux.csv
+
+      - name: Cleanup Xvfb
+        uses: bcomnes/cleanup-xvfb@v1
 
   mac:
     name: ${{ matrix.os }}
@@ -71,15 +75,20 @@ jobs:
           ls
 
       - name: Perform smoke test
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: python3 linux.py && mv linux.csv mac.csv
+        run: |
+          export DISPLAY=':99.0'
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+          python3 linux.py
+          mv linux.csv mac.csv
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
           path: mac.csv
+
+      - name: Cleanup Xvfb
+        uses: bcomnes/cleanup-xvfb@v1
 
   windows:
     name: ${{ matrix.os }}
@@ -107,9 +116,7 @@ jobs:
           Get-ChildItem
 
       - name: Perform smoke test
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: python3 windows.py
+        run: python3 windows.py
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
