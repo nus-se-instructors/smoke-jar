@@ -49,6 +49,7 @@ jobs:
           sleep 10
           ps aux | grep Xvfb
           python3 linux.py
+          java -jar jars/sana.jar
           mv linux.csv ${{ runner.os }}.csv
 
       - name: Perform smoke test (Mac)
@@ -61,12 +62,14 @@ jobs:
           sleep 10
           ps aux | grep Xvfb
           python3 linux.py
+          java -jar jars/sana.jar
           mv linux.csv ${{ runner.os }}.csv
 
       - name: Perform smoke test (Windows)
         if: runner.os == 'Windows'
         run: |
           python3 windows.py
+          java -jar jars/sana.jar
           Move-Item -Path .\windows.csv -Destination .\${{ runner.os }}.csv
 
       - name: Upload result as artifact
