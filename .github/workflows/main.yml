@@ -49,7 +49,6 @@ jobs:
           sleep 10
           ps aux | grep Xvfb
           python3 linux.py
-          timeout -k 10 5 java -jar jars/sana.jar
           mv linux.csv ${{ runner.os }}.csv
 
       - name: Perform smoke test (Mac)
@@ -63,15 +62,13 @@ jobs:
           sleep 10
           ps aux | grep Xvfb
           python3 linux.py
-          gtimeout -k 10 5 java -jar jars/sana.jar
           mv linux.csv ${{ runner.os }}.csv
 
       - name: Perform smoke test (Windows)
         if: runner.os == 'Windows'
         run: |
+          Get-DisplayResolution
           python3 windows.py
-          java -jar jars/sana.jar
-          timeout /t 10
           Move-Item -Path .\windows.csv -Destination .\${{ runner.os }}.csv
 
       - name: Upload result as artifact
