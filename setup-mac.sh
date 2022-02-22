@@ -7,6 +7,7 @@ export CFLAGS="-Wall -O0 -ggdb3 -arch i386 -arch x86_64 -pipe"
 export OBJCFLAGS=$CFLAGS
 export LDFLAGS=$CFLAGS
 
+brew install automake
 autoreconf -fvi
 ./configure --prefix=/opt/X11 --disable-dependency-tracking --enable-maintainer-mode --with-apple-application-name=XQuartz --with-bundle-id-prefix=org.xquartz --disable-xquartz --enable-xvfb --enable-xnest --enable-kdrive
 make
