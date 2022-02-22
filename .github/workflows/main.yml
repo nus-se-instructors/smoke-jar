@@ -11,7 +11,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
-      DISPLAY: :0
 
     steps:
       - name: Checkout repository
@@ -45,16 +44,14 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get install -y xvfb libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xinput0 libxcb-xfixes0
-          sudo /usr/bin/Xvfb $DISPLAY -screen 0 1280x1024x24 &
-          python3 linux.py
+          xvfb-run --auto-servernum python3 linux.py
           mv linux.csv ${{ runner.os }}.csv
 
       - name: Perform smoke test (Mac)
         if: runner.os == 'macOS'
         run: |
           brew install --cask xquartz
-          sudo /usr/bin/Xvfb $DISPLAY -screen 0 1280x1024x24 &
-          python3 linux.py
+          xvfb-run --auto-servernum python3 linux.py
           mv linux.csv ${{ runner.os }}.csv
 
       - name: Perform smoke test (Windows)
