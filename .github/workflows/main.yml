@@ -61,6 +61,7 @@ jobs:
           sudo Xvfb $DISPLAY -screen 0 1280x1024x24 &
           sleep 10
           ps aux | grep Xvfb
+          system_profiler SPDisplaysDataType | grep Resolution
           python3 linux.py
           mv linux.csv ${{ runner.os }}.csv
 
