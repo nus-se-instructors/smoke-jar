@@ -54,7 +54,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install --cask xquartz
-          sudo /usr/bin/xvfb $DISPLAY -screen 0 1280x1024x24 &
+          sudo xvfb $DISPLAY -screen 0 1280x1024x24 &
           sleep 10
           python3 linux.py
           mv linux.csv ${{ runner.os }}.csv
