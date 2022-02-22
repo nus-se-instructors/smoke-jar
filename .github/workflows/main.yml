@@ -33,6 +33,7 @@ jobs:
           export DISPLAY=':99.0'
           Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
           python3 linux.py
+          ps aux
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
@@ -80,6 +81,7 @@ jobs:
           Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
           python3 linux.py
           mv linux.csv mac.csv
+          ps aux
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
