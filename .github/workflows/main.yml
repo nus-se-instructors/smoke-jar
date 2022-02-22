@@ -53,7 +53,9 @@ jobs:
       - name: Perform smoke test (Mac)
         if: runner.os == 'macOS'
         run: |
-          ./setup-mac.sh
+          brew install --cask xquartz
+          sudo /opt/X11/libexec/privileged_startx
+          PATH=$PATH:/opt/X11/bin
           sudo xvfb $DISPLAY -screen 0 1280x1024x24 &
           sleep 10
           python3 linux.py
