@@ -42,6 +42,9 @@ jobs:
           name: ${{ matrix.os }}
           path: linux.csv
 
+      - name: Cleanup Xvfb
+        uses: bcomnes/cleanup-xvfb@v1
+
   mac:
     name: ${{ matrix.os }}
     strategy:
@@ -83,6 +86,9 @@ jobs:
         with:
           name: ${{ matrix.os }}
           path: mac.csv
+
+      - name: Cleanup Xvfb
+        uses: bcomnes/cleanup-xvfb@v1
 
   windows:
     name: ${{ matrix.os }}
