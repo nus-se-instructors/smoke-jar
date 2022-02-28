@@ -25,8 +25,7 @@ jobs:
       - name: Prepare Jars for smoke testing
         run: |
           mkdir jars
-          cd jars
-          wget -qi ../urls.txt
+          python3 download.py urls.txt
           ls -lh
 
       - name: Perform smoke test

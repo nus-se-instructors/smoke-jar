@@ -1,2 +1,3 @@
-https://github.com/Cyolune/ip/releases/download/A-Release/sana.jar
-https://github.com/charmainehly/ip/releases/download/A-Release/duke.jar
+https://github.com/Cyolune/ip
+https://github.com/charmainehly/ip
+https://github.com/CS2103Lerulatus/ip
