@@ -1,0 +1,45 @@
+name: Smoke test (Linux)
+on: [push, workflow_dispatch]
+
+jobs:
+  smoke:
+    name: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+    env:
+      DISPLAY: :0
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Prepare Jars for smoke testing
+        run: |
+          mkdir jars
+          cd jars
+          wget -qi ../urls.txt
+          ls -lh
+
+      - name: Perform smoke test
+        run: |
+          sudo apt-get install -y xvfb libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xinput0 libxcb-xfixes0
+          sudo /usr/bin/Xvfb $DISPLAY -screen 0 1280x1024x24 &
+          sleep 10
+          ps aux | grep Xvfb
+          python3 linux.py
+          mv linux.csv ${{ runner.os }}.csv
+
+      - name: Upload result as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}
+          path: ${{ runner.os }}.csv
