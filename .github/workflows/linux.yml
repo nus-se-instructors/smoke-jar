@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir jars
           python3 download.py urls.txt
-          ls -lh
+          ls -lh jars
 
       - name: Perform smoke test
         run: |
