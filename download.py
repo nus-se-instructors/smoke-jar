@@ -25,11 +25,10 @@ with open(urlsFilePath) as urlsFile:
     urls = [u for u in urlsFile.readlines() if u]
 
 total = len(urls)
-os.makedirs("jars")
 os.chdir("jars")
 
 for i, url in enumerate(urls, 1):
-    link, filename = url.split(' ')
+    link, filename = url.strip().split(' ')
     print(f'[{i}/{total}] downloading {link} as {filename}')
     urllib.request.urlretrieve(link, filename)
 
