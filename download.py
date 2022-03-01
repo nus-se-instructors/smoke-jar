@@ -31,6 +31,6 @@ os.chdir("jars")
 for i, url in enumerate(urls, 1):
     link, filename = url.split(' ')
     print(f'[{i}/{total}] downloading {link} as {filename}')
-    urllib.request.urlretrieve(link, fileName)
+    urllib.request.urlretrieve(link, filename)
 
 print("{0} files downloaded".format(count))
