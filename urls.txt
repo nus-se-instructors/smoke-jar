@@ -1,25 +1,19 @@
-https://github.com/l-shihao/ip
-https://github.com/yaololo/ip
-https://github.com/hana-oxy/ip
-https://github.com/TanChiaChun/ip
-https://github.com/e0262191/ip
-https://github.com/gweeyc/ip
-https://github.com/yinyin377/ip
-https://github.com/KaydenKhor/ip
-https://github.com/chenghuiyuan/ip
-https://github.com/e0373972/ip
-https://github.com/YangShuogeng/ip
-https://github.com/zyjarvis/ip
-https://github.com/badfr0g/ip
-https://github.com/jr-mojito/ip
-https://github.com/ivanhlb/ip
-https://github.com/Opkko/ip
-https://github.com/thisisdax/ip
-https://github.com/Mr-YaRou/ip
-https://github.com/Elxyng/ip
-https://github.com/Ruiting1/ip
-https://github.com/lowyanshuang/ip
-https://github.com/zcnmashleu95/ip
-https://github.com/spencernah/ip
-https://github.com/IcyNoPeople/ip
-https://github.com/sohwkjames/ip
+https://github.com/l-shihao/ip/releases/download/A-Release/duke.jar l-shihao[02-21-2022--01.05.08].jar
+https://github.com/TanChiaChun/ip/releases/download/A-Release2/ip-1.0-SNAPSHOT-all.jar TanChiaChun[02-20-2022--22.45.38].jar
+https://github.com/gweeyc/ip/releases/download/v3.1/LisGenie.jar gweeyc[02-12-2022--20.28.54].jar
+https://github.com/yinyin377/ip/releases/download/A-Release/duke.jar yinyin377[02-24-2022--23.57.08].jar
+https://github.com/KaydenKhor/ip/releases/download/DukeV2.3/dukeV2.3.jar KaydenKhor[02-27-2022--18.20.58].jar
+https://github.com/chenghuiyuan/ip/releases/download/A-Release/duke.jar chenghuiyuan[02-19-2022--22.20.42].jar
+https://github.com/e0373972/ip/releases/download/A-Release/duke.jar e0373972[02-14-2022--01.43.53].jar
+https://github.com/YangShuogeng/ip/releases/download/A-Release/duke.jar YangShuogeng[02-19-2022--11.41.27].jar
+https://github.com/zyjarvis/ip/releases/download/JAR-released/duke.jar zyjarvis[02-20-2022--13.57.46].jar
+https://github.com/jr-mojito/ip/releases/download/v0.2/duke.jar jr-mojito[02-20-2022--23.28.31].jar
+https://github.com/ivanhlb/ip/releases/download/A-Release/duke.jar ivanhlb[02-20-2022--23.25.50].jar
+https://github.com/thisisdax/ip/releases/download/v0.4/duke.jar thisisdax[02-24-2022--18.44.31].jar
+https://github.com/Mr-YaRou/ip/releases/download/v1.01/ip.jar Mr-YaRou[02-23-2022--13.34.21].jar
+https://github.com/Elxyng/ip/releases/download/A-Release/duke.jar Elxyng[02-21-2022--22.31.17].jar
+https://github.com/Ruiting1/ip/releases/download/A-Release/duke.jar Ruiting1[02-20-2022--23.49.28].jar
+https://github.com/lowyanshuang/ip/releases/download/v4.0/v4.0.zip lowyanshuang[02-17-2022--22.39.32].jar
+https://github.com/zcnmashleu95/ip/releases/download/v2.5/duke.jar zcnmashleu95[02-27-2022--23.10.48].jar
+https://github.com/spencernah/ip/releases/download/A-Release/ip-all.jar spencernah[02-21-2022--08.31.28].jar
+https://github.com/IcyNoPeople/ip/releases/download/v0.4/Duke.jar IcyNoPeople[02-20-2022--21.25.01].jar

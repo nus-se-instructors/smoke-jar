@@ -23,36 +23,14 @@ urls = []
 count = 0
 
 with open(urlsFilePath) as urlsFile:
-    urls = urlsFile.readlines()
-    print("Found {0} URLs".format(len(urls)))
+    urls = [u for u in urlsFile.readlines() if u]
 
+total = len(urls)
 os.chdir("jars")
 
-for url in urls:
-    parts = url.rstrip().split("/")
-    org = parts[3]
-    repo = parts[4]
-
-    apiUrl = "https://api.github.com/repos/{0}/{1}/releases/latest".format(org, repo)
-    data = {}
-
-    try:
-        with urllib.request.urlopen(apiUrl) as apiRequest:
-            data = json.loads(apiRequest.read().decode())
-    except urllib.error.HTTPError:
-        # Usually 404, but may be others
-        continue
-
-    if "assets" in data:
-        toDownload = data["assets"][0]["browser_download_url"]
-    else:
-        continue
-
-    if not toDownload.endswith('.jar'):
-        continue
-
-    fileName = "{0}-{1}.jar".format(org, repo)
-    urllib.request.urlretrieve(toDownload, fileName)
-    count += 1
+for i, url in enumerate(urls, 1):
+    link, filename = url.split(' ')
+    print(f'[{i}/{total}] downloading {link} as {filename}')
+    urllib.request.urlretrieve(link, fileName)
 
 print("{0} files downloaded".format(count))
