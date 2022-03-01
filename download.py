@@ -19,13 +19,13 @@ import sys
 import urllib.request
 
 urlsFilePath = sys.argv[1]
-urls = []
 count = 0
 
 with open(urlsFilePath) as urlsFile:
     urls = [u for u in urlsFile.readlines() if u]
 
 total = len(urls)
+os.makedirs("jars")
 os.chdir("jars")
 
 for i, url in enumerate(urls, 1):
@@ -33,4 +33,4 @@ for i, url in enumerate(urls, 1):
     print(f'[{i}/{total}] downloading {link} as {filename}')
     urllib.request.urlretrieve(link, filename)
 
-print("{0} files downloaded".format(count))
+print(f"{total} files downloaded")
