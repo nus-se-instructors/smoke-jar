@@ -31,6 +31,7 @@ for root, dirs, files in os.walk("jars"):
                 #rerun and log the error
                 jarproc = subprocess.Popen([JAVA_PATH, "-jar", jarname],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=False)
                 err = jarproc.communicate()[1]
+                print(err)
                 jarproc.kill()  #shouldn't be necessary
             table.append([str(jarname), str(err)])
             os.chdir("..")
@@ -40,3 +41,4 @@ with open("linux.csv","w",newline="") as f:
     writer = csv.writer(f)
     writer.writerows([["JAR", "error"]])
     writer.writerows(table)
+    print(f'Errors count: {len([x for x in table if x[1]])}')
